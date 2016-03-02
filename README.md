@@ -4,7 +4,7 @@
 
 powred by rv-adapter-endless   https://github.com/rockerhieu/rv-adapter-endless
 
-双向加载更多 recyclerview 
+双向加载更多 recyclerview, 不同于上拉刷新，下拉加载更多。双向都是加载更多操作
 
 `EndlessRecyclerViewAdapter` support for RecyclerView.Adapter
 
