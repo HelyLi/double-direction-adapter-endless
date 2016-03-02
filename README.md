@@ -10,9 +10,9 @@ powred by rv-adapter-endless   https://github.com/rockerhieu/rv-adapter-endless
 
 ## feature
 
-*1，双向加载更多
-*2，支持竖向，和横向
-*3，装饰模式实现，不需要修改之前adapter。
+* 1，双向加载更多
+* 2，支持竖向，和横向
+* 3，装饰模式实现，不需要修改之前adapter。
 
 ## when use
 
