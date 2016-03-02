@@ -2,36 +2,38 @@
 
 ## double-direction-adapter-endless 
 
-powred by rv-adapter-endless
+powred by rv-adapter-endless   https://github.com/rockerhieu/rv-adapter-endless
+
+双向加载更多 recyclerview 
 
 `EndlessRecyclerViewAdapter` support for RecyclerView.Adapter
 
-## Usage
+## 使用场景
 
-To use `EndlessRecyclerViewAdapter` you need to create a subclass that will control the endlessness, specifying what `View` to use for the loading placeholder.
+首次加载中间段数据，然后滚动时，需要加载中间段数据前和后的更多数据，
+eg: 乐视视频app（android） 播放页下半屏剧集card的滚动获取
 
-When the loading view is shown, it will send a request to load more data via the interface `RequestToLoadMoreListener`. After loading the data, you can let the adapter know via `onDataReady()` method.
+## 使用方法 
 
 ```java
-OriginalAdapter adapter = new OriginalAdapter();
-EndlessRecyclerViewAdapter endlessRecyclerViewAdapter = new EndlessRecyclerViewAdapter(this, adapter, new RequestToLoadMoreListener() {
-   @Override
-   public void onLoadMoreRequested() {
-      loadMoreData(new OnSuccess() {
-        void onSuccess(List<Item> items) {
-          adapter.append(items);
-          // notify that the data is ready, and the adapter SHOULD continue to load more
-          endlessRecyclerViewAdapter.onDataReady(true);
-        }
-      }, new OnError() {
-        void onError() {
-          // notify that the data is ready, and the adapter SHOULD NOT continue to load more
-          endlessRecyclerViewAdapter.onDataReady(false);
-        }
-      )
-   }
-});
-rv.setAdapter(endlessRecyclerViewAdapter);
+recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        ArrayList<String> strings = new ArrayList<>();
+        adapter = new SimpleStringAdapter(layoutManager, 30, strings);
+        endlessRecyclerViewAdapter = new EndlessRecyclerViewAdapter(this, adapter, new EndlessRecyclerViewAdapter.RequestToLoadMoreListener() {
+            @Override
+            public void onAfterLoadMoreRequested() {
+                //load onAfter
+            }
+
+            @Override
+            public void onBeforeLoadMoreRequested() {
+                //load before
+            }
+        });
+        recyclerView.setAdapter(endlessRecyclerViewAdapter);
 ```
 
-You can have a look at the example project for more details.
